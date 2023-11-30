@@ -1,0 +1,61 @@
+State,State abbr,xPosition,yPosition
+Alabama,AL,7.0,1.0
+Alaska,AK,0.0,4.0
+Arizona,AZ,2.5,1.5
+Arkansas,AR,5.5,1.5
+California,CA,1.5,1.5
+Colorado,CO,3.0,2.0
+Connecticut,CT,10.5,2.5
+Delaware,DE,9.0,2.0
+District of Columbia,DC,11.5,1.5
+Florida,FL,8.0,0.0
+Georgia,GA,7.5,0.5
+Hawaii,HI,0.0,0.0
+Idaho,ID,1.5,2.5
+Illinois,IL,5.5,2.5
+Indiana,IN,6.5,2.5
+Iowa,IA,4.5,2.5
+Kansas,KS,4.5,1.5
+Kentucky,KY,6.0,2.0
+Louisiana,LA,5.0,1.0
+Maine,ME,11.0,4.0
+Maryland,MD,8.0,2.0
+Massachusetts,MA,10.0,3.0
+Michigan,MI,7.0,3.0
+Minnesota,MN,4.0,3.0
+Mississippi,MS,6.0,1.0
+Missouri,MO,5.0,2.0
+Montana,MT,2.0,3.0
+Nebraska,NE,4.0,2.0
+Nevada,NV,2.0,2.0
+New Hampshire,NH,10.5,3.5
+New Jersey,NJ,9.5,2.5
+New Mexico,NM,3.0,1.0
+New York,NY,9.0,3.0
+North Carolina,NC,8.5,1.5
+North Dakota,ND,3.0,3.0
+Ohio,OH,7.5,2.5
+Oklahoma,OK,4.0,1.0
+Oregon,OR,1.0,2.0
+Pennsylvania,PA,8.5,2.5
+Rhode Island,RI,11.0,3.0
+South Carolina,SC,8.0,1.0
+South Dakota,SD,3.5,2.5
+Tennessee,TN,6.5,1.5
+Texas,TX,3.5,0.5
+Utah,UT,3.5,1.5
+Vermont,VT,9.5,3.5
+Virginia,VA,7.5,1.5
+Washington,WA,1.0,3.0
+West Virginia,WV,7.0,2.0
+Wisconsin,WI,5.0,3.0
+Wyoming,WY,2.5,2.5
+Armed Forces Europe,AE,12.5,1.5
+Puerto Rico,PR,9.5,-0.5
+"Virgin Islands, U.S.",VI,10.5,-0.5
+Northern Mariana Islands,MP,0.5,0.5
+American Samoa,AS,1.0,0.0
+Armed Forces Pacific,AP,-1.0,0.0
+Guam,GU,-0.5,-0.5
+Federated States of Micronesia,FM,0.5,-0.5
+Palau,PW,1.5,-0.5
