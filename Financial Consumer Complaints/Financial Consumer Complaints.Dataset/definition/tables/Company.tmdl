@@ -1,0 +1,84 @@
+table Company
+	lineageTag: 297537af-227d-4313-8c8b-39fba867d024
+
+	column 'Company SK'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d0fdb35-e521-4c51-8451-5f234e4dd5ad
+		summarizeBy: none
+		sourceColumn: Company SK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Company
+		dataType: string
+		lineageTag: 7162f0e7-0576-4704-9cf1-5ee1c0bec00f
+		summarizeBy: none
+		sourceColumn: Company
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'State abbr'
+		dataType: string
+		lineageTag: 3945e913-08a2-4b24-bd4c-130e6c49746d
+		summarizeBy: none
+		sourceColumn: State abbr
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ZIP code'
+		dataType: string
+		lineageTag: 56933acd-7644-43f9-b724-b2cf0f2f1fdd
+		summarizeBy: none
+		sourceColumn: ZIP code
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 655b565d-d9fa-42bb-ad10-a93749f8e60b
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column xPosition
+		dataType: double
+		lineageTag: e773d0e5-cfe6-4616-9a9a-acd239da719e
+		summarizeBy: none
+		sourceColumn: xPosition
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column yPosition
+		dataType: double
+		lineageTag: 9e895e48-0cf6-464e-9574-ce841a0903a7
+		summarizeBy: none
+		sourceColumn: yPosition
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Company = m
+		mode: import
+		queryGroup: Prod\Dimensions
+		source =
+				let
+				    Source = #"Financial Consumer Complaints Stg",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Company", "State", "ZIP code"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Added Index",{"Index", "Company", "State", "ZIP code"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Index", "Company SK"}, {"State", "State abbr"}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns", {"State abbr"}, #"State Mappings", {"State abbr"}, "State Mappings", JoinKind.LeftOuter),
+				    #"Expanded State Mappings" = Table.ExpandTableColumn(#"Merged Queries", "State Mappings", {"State", "xPosition", "yPosition"}, {"State", "xPosition", "yPosition"})
+				in
+				    #"Expanded State Mappings"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

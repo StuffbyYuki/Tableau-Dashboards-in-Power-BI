@@ -1,0 +1,46 @@
+table Issues
+	lineageTag: 15cd1d7f-3dad-455d-ac04-2ec3c35da55b
+
+	column Issue
+		dataType: string
+		lineageTag: 8e32a9b0-c6f6-4d07-a21a-9c608f886cb3
+		summarizeBy: none
+		sourceColumn: Issue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sub-issue
+		dataType: string
+		lineageTag: 1507aa71-d61f-4dcc-86ca-0239675c4445
+		summarizeBy: none
+		sourceColumn: Sub-issue
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issue SK'
+		dataType: int64
+		formatString: 0
+		lineageTag: b44e574d-c1ec-4dda-9601-c44497e3635d
+		summarizeBy: none
+		sourceColumn: Issue SK
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Issues = m
+		mode: import
+		queryGroup: Prod\Dimensions
+		source =
+				let
+				    Source = #"Financial Consumer Complaints Stg",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Issue", "Sub-issue"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Added Index",{"Index", "Issue", "Sub-issue"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Index", "Issue SK"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

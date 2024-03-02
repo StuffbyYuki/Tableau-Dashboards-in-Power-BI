@@ -1,0 +1,46 @@
+expression 'Financial Consumer Complaints Base' =
+		let
+		    Source = Csv.Document(File.Contents("\\Mac\Home\Desktop\pbi_sandbox\TDIP\Financial Consumer Complaints\data\Financial Consumer Complaints.csv"),[Delimiter=",", Columns=17, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Complaint ID", Int64.Type}, {"Date Sumbited", type date}, {"Product", type text}, {"Sub-product", type text}, {"Issue", type text}, {"Sub-issue", type text}, {"Company public response", type text}, {"Company", type text}, {"State", type text}, {"ZIP code", type text}, {"Tags", type text}, {"Consumer consent provided?", type text}, {"Submitted via", type text}, {"Date Received", type date}, {"Company response to consumer", type text}, {"Timely response?", type text}, {"Consumer disputed?", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: 401db1dd-27c9-4aeb-8f83-cbdb698d138e
+	queryGroup: Raw/Base
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Financial Consumer Complaints Stg' =
+		let
+		    Source = Csv.Document(File.Contents("\\Mac\Home\Desktop\pbi_sandbox\TDIP\Financial Consumer Complaints\data\Financial Consumer Complaints.csv"),[Delimiter=",", Columns=17, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Complaint ID", Int64.Type}, {"Date Sumbited", type date}, {"Product", type text}, {"Sub-product", type text}, {"Issue", type text}, {"Sub-issue", type text}, {"Company public response", type text}, {"Company", type text}, {"State", type text}, {"ZIP code", type text}, {"Tags", type text}, {"Consumer consent provided?", type text}, {"Submitted via", type text}, {"Date Received", type date}, {"Company response to consumer", type text}, {"Timely response?", type text}, {"Consumer disputed?", type text}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","N/A","Unknown",Replacer.ReplaceText,{"Consumer consent provided?"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","N/A","Unknown",Replacer.ReplaceText,{"Consumer disputed?"}),
+		    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","""""","Unknown",Replacer.ReplaceText,{"Sub-issue"}),
+		    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","""""","Unknown",Replacer.ReplaceText,{"Sub-product"})
+		in
+		    #"Replaced Value3"
+	lineageTag: e6b711c5-e82d-4c09-a7c8-174d2de5c5b4
+	queryGroup: Stg
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'State Mappings' =
+		let
+		    Source = Csv.Document(File.Contents("\\Mac\Home\Desktop\pbi_sandbox\TDIP\Financial Consumer Complaints\data\State Mappings.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"State", type text}, {"State abbr", type text}, {"xPosition", type number}, {"yPosition", type number}})
+		in
+		    #"Changed Type"
+	lineageTag: 5872a5f6-587d-4782-af05-bffbe4a73b9b
+	queryGroup: Raw/Base
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

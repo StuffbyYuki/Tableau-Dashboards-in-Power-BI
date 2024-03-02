@@ -1,0 +1,84 @@
+table 'Complaint Detail'
+	lineageTag: 89f04b91-415f-42f4-a7f4-a3630564df29
+
+	column 'Complaint Detail SK'
+		dataType: int64
+		formatString: 0
+		lineageTag: 40edf5d2-4811-4f6f-b7f8-898226ac2488
+		summarizeBy: none
+		sourceColumn: Complaint Detail SK
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Company public response'
+		dataType: string
+		lineageTag: dd4f48aa-cb0e-456d-8901-9d07929b278b
+		summarizeBy: none
+		sourceColumn: Company public response
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tags
+		dataType: string
+		lineageTag: deee8e6b-5170-48b0-aaab-21ecb71d2678
+		summarizeBy: none
+		sourceColumn: Tags
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Consumer consent provided?'
+		dataType: string
+		lineageTag: 8946b99d-c3cb-4cdb-b348-4daec7584d76
+		summarizeBy: none
+		sourceColumn: Consumer consent provided?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Submitted via'
+		dataType: string
+		lineageTag: 27600aae-41a8-4edf-b487-e3f3e743b2bf
+		summarizeBy: none
+		sourceColumn: Submitted via
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Company response to consumer'
+		dataType: string
+		lineageTag: 172586fc-edef-40dc-a9ed-c6d65942e06f
+		summarizeBy: none
+		sourceColumn: Company response to consumer
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Timely response?'
+		dataType: string
+		lineageTag: ac6b5dbe-4d2f-4684-a2b9-e0d2292b27e0
+		summarizeBy: none
+		sourceColumn: Timely response?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Consumer disputed?'
+		dataType: string
+		lineageTag: c290d436-6c28-4107-8d14-51d5d082c393
+		summarizeBy: none
+		sourceColumn: Consumer disputed?
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Complaint Detail' = m
+		mode: import
+		queryGroup: Prod\Dimensions
+		source =
+				let
+				    Source = #"Financial Consumer Complaints Stg",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Company public response", "Tags", "Consumer consent provided?", "Submitted via", "Company response to consumer", "Timely response?", "Consumer disputed?"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Added Index",{"Index", "Company public response", "Tags", "Consumer consent provided?", "Submitted via", "Company response to consumer", "Timely response?", "Consumer disputed?"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns",{{"Index", "Complaint Detail SK"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

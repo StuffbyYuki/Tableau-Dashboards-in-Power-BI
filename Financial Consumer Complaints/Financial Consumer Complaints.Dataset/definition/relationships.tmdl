@@ -1,0 +1,25 @@
+relationship 1ac0535d-e2fb-4f2c-99d6-12367268b8ab
+	fromColumn: Complaints.'Product RK'
+	toColumn: Product.'Product RK'
+
+relationship 4fdd75b9-f6c2-48ff-bfa3-ff561b0ce5e1
+	fromColumn: Complaints.'Issue SK'
+	toColumn: Issues.'Issue SK'
+
+relationship 582d1ef0-570e-49da-af38-f10466ce7288
+	fromColumn: Complaints.'Company SK'
+	toColumn: Company.'Company SK'
+
+relationship 549596ff-16f5-40a9-89f6-a51b328a5614
+	fromColumn: Complaints.'Complaint Detail SK'
+	toColumn: 'Complaint Detail'.'Complaint Detail SK'
+
+relationship a024679e-7df0-487d-80c5-f2bd39761dcc
+	fromColumn: Complaints.'Date Sumbited'
+	toColumn: Date.Date
+
+relationship 8190128a-22dc-4009-ba6d-bfc8e3ffb349
+	isActive: false
+	fromColumn: Complaints.'Date Received'
+	toColumn: Date.Date
+

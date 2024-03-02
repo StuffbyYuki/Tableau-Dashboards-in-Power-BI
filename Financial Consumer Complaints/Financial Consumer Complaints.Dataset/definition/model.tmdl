@@ -1,0 +1,43 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Prod
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup Raw/Base
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Prod\Dimensions
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup Prod\Facts
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Stg
+
+	annotation PBI_QueryGroupOrder = 1
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBIDesktopVersion = 2.126.927.0 (24.02)
+
+annotation PBI_QueryOrder = ["Financial Consumer Complaints Base","State Mappings","Complaints","Issues","Product","Date","Company","Complaint Detail","Financial Consumer Complaints Stg"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table Complaints
+ref table Issues
+ref table Product
+ref table Date
+ref table Company
+ref table 'Complaint Detail'
+

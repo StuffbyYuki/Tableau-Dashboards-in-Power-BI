@@ -1,0 +1,261 @@
+table Complaints
+	lineageTag: f1e268db-50d9-47dc-be50-80686df6c655
+
+	measure 'Total Complaints' = ```
+			COUNTROWS( Complaints ) 
+			```
+		formatString: #,0
+		lineageTag: 3685a63d-0fab-4282-8150-4f8fee93a54e
+
+	measure 'Avg Complaint Count per Product' = ```
+			
+			VAR _Total = [Total Complaints]
+			VAR _ProductCntInContext = DISTINCTCOUNT( 'Product'[Product] )
+			VAR _AvgCntPerProduct = DIVIDE( _Total, _ProductCntInContext )
+			RETURN
+			_AvgCntPerProduct
+			
+			```
+		lineageTag: 0a41e1e1-2925-4a49-b434-7d12d1c6b2a4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Disputed Consumers' = ```
+			
+			CALCULATE( 
+			    COUNTROWS( Complaints ),
+			    'Complaint Detail'[Consumer disputed?] = "Yes"
+			)
+			```
+		formatString: 0
+		lineageTag: de0d39d9-37d3-4e77-981d-1fd63c06d64c
+
+	measure '% Complaints by Media' = ```
+			
+			 VAR _CntEachMedia = [Total Complaints]
+			 VAR _FixedTotalCnt = 
+			 CALCULATE( 
+			    [Total Complaints],
+			    ALLSELECTED( 'Complaint Detail'[Submitted via] )
+			 )
+			 VAR _Percent = DIVIDE( _CntEachMedia, _FixedTotalCnt )
+			 RETURN
+			 _Percent
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: cc7ea1b6-0f79-4d84-93c9-b0100b7b9fad
+
+	measure 'Min Received Date' =
+			
+			MIN( Complaints[Date Received] )
+		formatString: Short Date
+		lineageTag: 58f4d3fd-cb29-445e-be23-cf6d77b712ba
+
+	measure 'Max Received Date' =
+			
+			MAX( Complaints[Date Received] )
+		formatString: Short Date
+		lineageTag: bf77bcc7-3e2f-4ee9-8a1b-75bbdd1d32d5
+
+	measure 'Timely Response Rate' = ```
+			
+			VAR _TimelyResponse = 
+			CALCULATE( 
+			    [Total Complaints],
+			    'Complaint Detail'[Timely response?] = "Yes"
+			)
+			VAR _TimelyResponseRate = 
+			DIVIDE( _TimelyResponse, [Total Complaints] )
+			RETURN
+			_TimelyResponseRate
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: ea1de12d-12be-472d-abe5-6fc1ffc82a63
+
+	measure 'Complaints in Progress' = ```
+			
+			CALCULATE( 
+			    [Total Complaints],
+			    'Complaint Detail'[Company response to consumer] = "In progress"
+			)
+			```
+		formatString: 0
+		lineageTag: fbb1743d-fba7-4279-b9a7-754a3572e65f
+
+	measure 'Disputed Rate' =
+			
+			DIVIDE( Complaints[Disputed Consumers], [Total Complaints] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: c4ad5fa3-c730-406c-a95b-7cb1998f8153
+
+	measure '% Complaints Resolved at No Cost' = ```
+			
+			VAR _CompsResolvedNoCost = 
+			CALCULATE( 
+			    [Total Complaints],
+			    'Complaint Detail'[Company response to consumer] <> "Closed with monetary relief"
+			)
+			VAR _PercResolvedNoCost = 
+			DIVIDE( _CompsResolvedNoCost, [Total Complaints] )
+			RETURN
+			_PercResolvedNoCost
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 2d23b994-8672-4f24-aa9b-1ee4b8dbc347
+
+	measure 'Sparkline - Total Complaints' = ```
+			
+			
+			// "Date" field used in this example along the X axis
+			VAR XMinDate = [Min Received Date]
+			VAR XMaxDate = [Max Received Date]
+			
+			// Obtain overall min and overall max measure values when evaluated for each date
+			VAR YMinValue = MINX(Values(Complaints[Date Received]),CALCULATE([Total Complaints]))
+			VAR YMaxValue = MAXX(Values(Complaints[Date Received]),CALCULATE([Total Complaints]))
+			
+			// Build table of X & Y coordinates and fit to 50 x 150 viewbox
+			VAR SparklineTable = ADDCOLUMNS(
+			    SUMMARIZE('Complaints', Complaints[Date Received]),
+			        "X",INT(150 * DIVIDE(Complaints[Date Received] - XMinDate, XMaxDate - XMinDate)),
+			        "Y",INT(50 * DIVIDE([Total Complaints] - YMinValue,YMaxValue - YMinValue)))
+			
+			// Concatenate X & Y coordinates to build the sparkline
+			VAR Lines = CONCATENATEX(SparklineTable,[X] & "," & 50-[Y]," ", Complaints[Date Received])
+			
+			// Add to SVG, and verify Data Category is set to Image URL for this measure
+			VAR SVGImageURL = //IF(HASONEVALUE(financials[Country]),
+			    "data:image/svg+xml;utf8," & 
+			    "<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 150 50'>" & 
+			     "<polyline fill='navy' fill-opacity='0.3' stroke='navy' 
+			      stroke-width='3' points=' 0 50 " & Lines & 
+			      " 150 150 Z '/></svg>"
+			    //   ,
+			    //  BLANK())
+			RETURN SVGImageURL
+			```
+		lineageTag: 4207dbb3-8452-4ae0-a994-65cd9f4dc2b7
+		dataCategory: ImageUrl
+
+	measure 'Data Label - Complaints by Media (% breakdown)' =
+			
+			VAR _FormattedTotal = FORMAT([Total Complaints], "#,0")
+			VAR _FormattedPerc = FORMAT([% Complaints by Media], "0%;-0%;0%")
+			VAR _Label = _FormattedTotal & " | " & _FormattedPerc
+			RETURN
+			_Label
+		lineageTag: 07e3b9d1-ea9f-449d-bec9-fa9e616912f0
+
+	measure '100% Bar' = 1
+		formatString: 0
+		lineageTag: ab645ed4-97ed-49dc-95fc-f5ae755716ea
+
+	measure '% Complaints in Progress' =
+			
+			DIVIDE( [Complaints in Progress], [Total Complaints] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 42edbb17-ecc0-4b32-8781-30686f20190a
+
+	measure 'Max Total Complaints by Issue' = ```
+			
+			VAR _MaxTotalComplaintsByIssue = 
+			CALCULATE(
+			    MAXX(
+			        VALUES( Issues[Issue] ),
+			        [Total Complaints]
+			    ),
+			    ALLSELECTED( Issues[Issue] )
+			)
+			RETURN
+			_MaxTotalComplaintsByIssue
+			```
+		formatString: 0
+		lineageTag: 5228c2a3-f48b-4746-8bf4-158fb8a65ac7
+
+	column 'Complaint ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: b12612e5-b37b-4d7c-8d73-420870268488
+		summarizeBy: none
+		sourceColumn: Complaint ID
+
+		annotation SummarizationSetBy = User
+
+	column 'Date Sumbited'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dc6d0769-63a8-40fe-8fc2-27c323041bf7
+		summarizeBy: none
+		sourceColumn: Date Sumbited
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Received'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c1c03df0-f6c9-43e1-9e55-3e125bf1a875
+		summarizeBy: none
+		sourceColumn: Date Received
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Product RK'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6cf15bb2-1ca0-4501-9d4a-1331e0713d45
+		summarizeBy: none
+		sourceColumn: Product RK
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issue SK'
+		dataType: int64
+		formatString: 0
+		lineageTag: e265360e-8d7a-4ab9-888f-19104169c970
+		summarizeBy: none
+		sourceColumn: Issue SK
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Company SK'
+		dataType: int64
+		formatString: 0
+		lineageTag: 09912265-e6d5-42dd-b08c-0d71d4223e71
+		summarizeBy: none
+		sourceColumn: Company SK
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Complaint Detail SK'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d13554c-7ee0-4ddc-b39e-3b7c4b62a3f5
+		summarizeBy: none
+		sourceColumn: Complaint Detail SK
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Complaints = m
+		mode: import
+		queryGroup: Prod\Facts
+		source =
+				let
+				    Source = #"Financial Consumer Complaints Stg",
+				    #"Merged Queries" = Table.NestedJoin(Source, {"Product", "Sub-product"}, Product, {"Product", "Sub-product"}, "Product.1", JoinKind.Inner),
+				    #"Expanded Product.1" = Table.ExpandTableColumn(#"Merged Queries", "Product.1", {"Product RK"}, {"Product RK"}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Expanded Product.1", {"Issue", "Sub-issue"}, Issues, {"Issue", "Sub-issue"}, "Issues", JoinKind.Inner),
+				    #"Expanded Issues" = Table.ExpandTableColumn(#"Merged Queries1", "Issues", {"Issue SK"}, {"Issue SK"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Expanded Issues", {"Company", "State", "ZIP code"}, Company, {"Company", "State abbr", "ZIP code"}, "Company.1", JoinKind.Inner),
+				    #"Expanded Company.1" = Table.ExpandTableColumn(#"Merged Queries2", "Company.1", {"Company SK"}, {"Company SK"}),
+				    #"Merged Queries3" = Table.NestedJoin(#"Expanded Company.1", {"Company public response", "Tags", "Consumer consent provided?", "Submitted via", "Company response to consumer", "Timely response?", "Consumer disputed?"}, #"Complaint Detail", {"Company public response", "Tags", "Consumer consent provided?", "Submitted via", "Company response to consumer", "Timely response?", "Consumer disputed?"}, "Complaint Detail", JoinKind.Inner),
+				    #"Expanded Complaint Detail" = Table.ExpandTableColumn(#"Merged Queries3", "Complaint Detail", {"Complaint Detail SK"}, {"Complaint Detail SK"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Expanded Complaint Detail",{"Complaint ID", "Date Sumbited", "Date Received", "Product RK", "Issue SK", "Company SK", "Complaint Detail SK"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,296 @@
+table Date
+	lineageTag: 9373b03b-4e73-4c1b-ae8f-c8a6baaf61c4
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b4abe530-1441-4114-b90e-e1c7cc7b24a4
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: be308e0b-c227-4c4a-9870-2bca9b03ce70
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Year'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 64a5f6f0-dae1-4d97-995e-a217a14dc157
+		summarizeBy: none
+		sourceColumn: Start of Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End of Year'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7e52d678-07e0-437b-a30b-62c54c548bcf
+		summarizeBy: none
+		sourceColumn: End of Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 985f3a84-e60a-4209-8f02-f6bb42dffca7
+		summarizeBy: none
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2ea8eedb-738f-4362-9ff4-0066e0d3c248
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 358c33e0-d14a-4fb6-8931-6481870ebb7c
+		summarizeBy: none
+		sourceColumn: End of Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Days in Month'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a861d47-c34e-4b71-8b16-06d8d197972f
+		summarizeBy: none
+		sourceColumn: Days in Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: cf08f7cb-2826-40a7-b9a5-1a7a8a5b7e8f
+		summarizeBy: none
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name'
+		dataType: string
+		lineageTag: 2931f5f5-d28c-4ed1-b9fa-0dd88fbe3d60
+		summarizeBy: none
+		sourceColumn: Day Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: int64
+		formatString: 0
+		lineageTag: dbe369cd-de49-4490-b369-b99f89ca9382
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: a617eeeb-d1bd-4d89-9d94-a9334d84e3c6
+		summarizeBy: none
+		sourceColumn: Day of Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: b9e1119d-c3c1-430a-a0a7-566a6af74222
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Quarter Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: af011369-d094-4f07-84a4-a91c1a03c105
+		summarizeBy: none
+		sourceColumn: Quarter Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: e03b6253-df27-4b72-9398-574b75b64045
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Quarter'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2b5e5916-8f51-41b0-af9d-69188ec78524
+		summarizeBy: none
+		sourceColumn: Start of Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End of Quarter'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fdf68eb3-0202-4065-ae92-280c8ffe4036
+		summarizeBy: none
+		sourceColumn: End of Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Week of Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7db6dae0-d90b-4837-abe4-18d98e74a784
+		summarizeBy: none
+		sourceColumn: Week of Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week of Month'
+		dataType: int64
+		formatString: 0
+		lineageTag: f3a801b0-c2e0-4094-8f22-41999a677d87
+		summarizeBy: none
+		sourceColumn: Week of Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Week'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 780f1571-6d6d-4aed-877a-abd0ce976b8d
+		summarizeBy: none
+		sourceColumn: Start of Week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End of Week'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0ac7e058-61db-4609-933e-b41fedb7936a
+		summarizeBy: none
+		sourceColumn: End of Week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Fiscal Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: 77692807-94a5-41d8-bcd0-d1310167de47
+		summarizeBy: none
+		sourceColumn: Fiscal Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Quarter'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f4cacba-7a81-4d8e-9e49-3ea374dba766
+		summarizeBy: none
+		sourceColumn: Fiscal Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Month'
+		dataType: int64
+		formatString: 0
+		lineageTag: ec2e31b4-ea28-4043-9f00-34f84bdedd45
+		summarizeBy: none
+		sourceColumn: Fiscal Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Offset'
+		dataType: int64
+		formatString: 0
+		lineageTag: ef920e75-72ac-404a-b547-42039b0cf397
+		summarizeBy: none
+		sourceColumn: Day Offset
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Offset'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c2002c1-4522-400c-8d33-996ba7984751
+		summarizeBy: none
+		sourceColumn: Month Offset
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Offset'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5470e693-3212-4fd6-a90d-f439d8209544
+		summarizeBy: none
+		sourceColumn: Year Offset
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Quarter Offset'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d34342b-9216-46db-b7d2-f06976981bfb
+		summarizeBy: none
+		sourceColumn: Quarter Offset
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year'
+		dataType: string
+		lineageTag: a1fd822f-cebc-4900-856f-5754360154f2
+		summarizeBy: none
+		sourceColumn: Month Year
+		sortByColumn: 'Month Offset'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = m
+		mode: import
+		queryGroup: Prod\Dimensions
+		source =
+				let
+				    Source = PowerPlatform.Dataflows(null),
+				    Workspaces = Source{[Id="Workspaces"]}[Data],
+				    #"ce738073-c7d7-4aed-83cf-1d7620d60f29" = Workspaces{[workspaceId="ce738073-c7d7-4aed-83cf-1d7620d60f29"]}[Data],
+				    #"7d235fb0-43cf-4f6b-b5bb-423960c5acbb" = #"ce738073-c7d7-4aed-83cf-1d7620d60f29"{[dataflowId="7d235fb0-43cf-4f6b-b5bb-423960c5acbb"]}[Data],
+				    Date_ = #"7d235fb0-43cf-4f6b-b5bb-423960c5acbb"{[entity="Date",version=""]}[Data]
+				in
+				    Date_
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,10 @@
+culture en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "1.0.0",
+			  "Language": "en-US",
+			  "DynamicImprovement": "HighConfidence"
+			}
+		contentType: json
+
